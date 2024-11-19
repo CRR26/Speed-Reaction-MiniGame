@@ -14,9 +14,10 @@ public class TargetX : MonoBehaviour
     private float minValueX = -3.75f; // the x value of the center of the left-most square
     private float minValueY = -3.75f; // the y value of the center of the bottom-most square
     private float spaceBetweenSquares = 2.5f; // the distance between the centers of squares on the game board
-    
 
-    void Start()
+    private KeyCode[] buttons;
+    
+    void Awake()
     {
         rb = GetComponent<Rigidbody>();
         gameManagerX = GameObject.Find("Game Manager").GetComponent<GameManagerX>();
@@ -24,24 +25,36 @@ public class TargetX : MonoBehaviour
         transform.position = RandomSpawnPosition(); 
         StartCoroutine(RemoveObjectRoutine()); // begin timer before target leaves screen
 
-    }
+        buttons = new KeyCode[]{KeyCode.Z, KeyCode.X, KeyCode.C, KeyCode.V};
 
-    // When target is clicked, destroy it, update score, and generate explosion
-    private void OnMouseEnter()
-    {
-        if (gameManagerX.isGameActive)
-        {
-            Destroy(gameObject);
-            gameManagerX.UpdateScore(pointValue);
-            Explode();
-        }
-               
+        Debug.Log(buttons[0]);
+
     }
 
     void Update()
     {
-      if (Input.GetKey())
+        if(Input.GetKeyDown(buttons[0]))
+        {
+            if (gameManagerX.isGameActive)
+            {
+                Destroy(gameObject);
+                gameManagerX.UpdateScore(pointValue);
+                Explode();
+            }
+        }
     }
+
+    // When target is clicked, destroy it, update score, and generate explosion
+    // private void OnMouseDown()
+    // {
+    //     if (gameManagerX.isGameActive)
+    //     {
+    //         Destroy(gameObject);
+    //         gameManagerX.UpdateScore(pointValue);
+    //         Explode();
+    //     }
+               
+    // }
 
     // Generate a random spawn position based on a random index from 0 to 3
     Vector3 RandomSpawnPosition()
