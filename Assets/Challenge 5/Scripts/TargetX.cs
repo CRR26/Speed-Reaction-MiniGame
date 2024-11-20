@@ -42,6 +42,7 @@ public class TargetX : MonoBehaviour
                 Explode();
             }
         }
+
     }
 
     // When target is clicked, destroy it, update score, and generate explosion
