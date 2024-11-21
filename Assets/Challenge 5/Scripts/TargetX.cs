@@ -9,13 +9,14 @@ public class TargetX : MonoBehaviour
     public int pointValue;
     public GameObject explosionFx;
 
-    public float timeOnScreen = 1.0f;
+    public float timeOnScreen = 5.0f;
 
     private float minValueX = -3.75f; // the x value of the center of the left-most square
     private float minValueY = -3.75f; // the y value of the center of the bottom-most square
     private float spaceBetweenSquares = 2.5f; // the distance between the centers of squares on the game board
 
     private KeyCode[] buttons;
+    int randomButtonIndex; 
     
     void Awake()
     {
@@ -26,14 +27,14 @@ public class TargetX : MonoBehaviour
         StartCoroutine(RemoveObjectRoutine()); // begin timer before target leaves screen
 
         buttons = new KeyCode[]{KeyCode.Z, KeyCode.X, KeyCode.C, KeyCode.V};
-
-        Debug.Log(buttons[0]);
+        randomButtonIndex = Random.Range(0,buttons.Length);
+        Debug.Log("Press " + buttons[randomButtonIndex].ToString());
 
     }
 
     void Update()
     {
-        if(Input.GetKeyDown(buttons[0]))
+        if(Input.GetKeyDown(buttons[randomButtonIndex]))
         {
             if (gameManagerX.isGameActive)
             {
